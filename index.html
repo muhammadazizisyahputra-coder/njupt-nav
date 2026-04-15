@@ -191,6 +191,45 @@
     </style>
 </head>
 <body>
+	<button id="logoutBtn" onclick="logout()" style="
+	    display: none; /* 初始隐藏 */
+	    position: fixed; 
+	    top: 20px; 
+	    right: 20px; 
+	    padding: 8px 15px; 
+	    background: rgba(255, 255, 255, 0.4); 
+	    backdrop-filter: blur(10px);
+	    border: 1px solid rgba(255,255,255,0.3);
+	    border-radius: 20px; 
+	    color: #333;
+	    font-size: 12px;
+	    font-weight: bold;
+	    cursor: pointer; 
+	    z-index: 1000;
+	    transition: 0.3s;
+	">
+	    退出登录 🚪
+	</button>
+	
+	<script>
+	    // 页面加载时：判断是否显示退出按钮
+	    window.onload = function() {
+	        const isLoggedIn = localStorage.getItem('isLoggedIn');
+	        if (isLoggedIn === 'true') {
+	            document.getElementById('logoutBtn').style.display = 'block';
+	        }
+	    }
+	
+	    // 退出登录函数
+	    function logout() {
+	        if(confirm('确定要退出登录吗？')) {
+	            localStorage.removeItem('isLoggedIn');
+	            localStorage.removeItem('studentName');
+	            alert('已安全退出');
+	            location.reload(); // 刷新页面，按钮会自动隐藏，进入功能也会提示登录
+	        }
+	    }
+	</script>
 
     <header class="header">
         <a href="#" class="logo">● 南邮直达</a>
@@ -203,11 +242,23 @@
         </div>
 
        <nav class="quick-nav">
-                   <a href="academic.html">教务系统</a>
-                   <a href="smart.html">智慧校园</a>
-                   <a href="library.html">图书馆预约</a>
-                   <a href="aodu.html">奥都外卖</a> 
-				   </nav>
+           <a href="javascript:void(0)" onclick="checkAccess('academic.html')">教务系统</a>
+           <a href="javascript:void(0)" onclick="checkAccess('smart.html')">智慧校园</a>
+           <a href="javascript:void(0)" onclick="checkAccess('library.html')">图书馆预约</a>
+           <a href="javascript:void(0)" onclick="checkAccess('aodu.html')">奥都外卖</a>
+       </nav>
+       
+       <script>
+           function checkAccess(targetUrl) {
+               const isLoggedIn = localStorage.getItem('isLoggedIn');
+               if (isLoggedIn === 'true') {
+                   window.location.href = targetUrl;
+               } else {
+                   alert('该功能需要登录后使用，请先登录！');
+                   window.location.href = 'login.html';
+               }
+           }
+       </script>
 
         <div class="toolbox">
             <div class="toolbox">

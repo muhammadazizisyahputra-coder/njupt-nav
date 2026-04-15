@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>学生登录 - 南邮直达</title>
+    <style>
+        body { margin: 0; font-family: 'PingFang SC', sans-serif; height: 100vh; display: flex; align-items: center; justify-content: center; background: url('https://images.unsplash.com/photo-1541339907198-e08756dedf3f?q=80&w=1920&auto=format&fit=crop') no-repeat center; background-size: cover; }
+        .login-card { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(15px); padding: 40px; border-radius: 20px; box-shadow: 0 15px 35px rgba(0,0,0,0.2); width: 320px; text-align: center; border: 1px solid rgba(255,255,255,0.3); }
+        h2 { color: #005BAC; margin-bottom: 30px; }
+        input { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; outline: none; }
+        button { width: 100%; padding: 12px; background: #005BAC; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 20px; transition: 0.3s; }
+        button:hover { background: #004a8d; transform: translateY(-2px); }
+        .tips { font-size: 12px; color: #666; margin-top: 15px; }
+    </style>
+</head>
+<body>
+    <div class="login-card">
+        <h2>学生身份验证</h2>
+        <input type="text" id="stuId" placeholder="学号 (测试用: B200101)">
+        <input type="password" id="pwd" placeholder="密码 (测试用: 123456)">
+        <button onclick="handleLogin()">立即登录</button>
+        <p class="tips">请使用统一身份认证账号登录</p>
+    </div>
+
+    <script>
+        function handleLogin() {
+            const stuId = document.getElementById('stuId').value;
+            const pwd = document.getElementById('pwd').value;
+
+            // 模拟验证：只要学号和密码不为空即可（或者你指定一个）
+            if(stuId === "B200101" && pwd === "123456") {
+                // 核心：在本地存入登录令牌 (Token)
+                localStorage.setItem('isLoggedIn', 'true');
+                localStorage.setItem('studentName', '南邮学子');
+                alert('登录成功！欢迎回来');
+                // 跳转回首页
+                window.location.href = 'index.html';
+            } else {
+                alert('学号或密码错误 (提示: B200101 / 123456)');
+            }
+        }
+    </script>
+</body>
+</html>

@@ -67,6 +67,14 @@
     </div>
 
     <script>
+		// 在 smart.html, library.html, academic.html 的 script 顶部加入
+		(function() {
+		    const isLoggedIn = localStorage.getItem('isLoggedIn');
+		    if (isLoggedIn !== 'true') {
+		        alert('检测到未登录，请先验证身份！');
+		        window.location.href = 'login.html';
+		    }
+		})();
         let selected = null;
         function showToast(msg) {
             let container = document.querySelector('.toast-container') || Object.assign(document.createElement('div'), {className: 'toast-container'});
