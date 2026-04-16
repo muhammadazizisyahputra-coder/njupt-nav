@@ -32,7 +32,7 @@
     <nav class="nav-bar">
         <a href="index.html" class="back-btn">← 返回首页</a>
         <strong>校园二手教材</strong>
-        <div><button style="border:none; background:transparent; color:#005BAC; font-weight:bold; cursor:pointer;" onclick="alert('发布功能开发中...')">+ 发布</button></div>
+       <button style="..." onclick="window.location.href='publish.html'">+ 发布</button>
     </nav>
 
     <div class="container">
@@ -85,6 +85,30 @@
         function showContact(info) {
             alert("卖家联系方式：\n" + info + "\n\n请说明是在南邮直达上看到的~");
         }
+		// 页面加载完成后，读取本地存储的书籍数据并展示
+		        window.onload = function() {
+		            // 获取我们刚才存在 marketBooks 里的数据
+		            const savedBooks = JSON.parse(localStorage.getItem('marketBooks')) || [];
+		            const grid = document.querySelector('.book-grid');
+		            
+		            // 遍历每一本书，生成 HTML 卡片，插到页面最前面
+		            savedBooks.forEach(book => {
+		                const cardHTML = `
+		                <div class="book-card" style="border-left: 4px solid #ff9800;">
+		                    <div class="book-img">🌟</div>
+		                    <h3 class="book-title">${book.title} <span style="color:red;font-size:12px;">(新发布)</span></h3>
+		                    <div class="book-course">适用课程: ${book.course}</div>
+		                    <div class="price-row">
+		                        <span class="price">￥${book.price}</span>
+		                        <span class="condition">${book.condition}</span>
+		                    </div>
+		                    <button class="contact-btn" onclick="showContact('${book.contact}')">联系卖家</button>
+		                </div>`;
+		                
+		                // 将新卡片插入到容器的开头
+		                grid.insertAdjacentHTML('afterbegin', cardHTML);
+		            });
+		        };
     </script>
 </body>
 </html>

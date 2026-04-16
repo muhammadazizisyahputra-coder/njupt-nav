@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>期末资料库 - 南邮直达</title>
+    <style>
+        body { margin: 0; font-family: 'PingFang SC', sans-serif; background: url('https://images.unsplash.com/photo-1541339907198-e08756dedf3f?q=80&w=1920&auto=format&fit=crop') fixed center/cover; color: #333; }
+        .nav-bar { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(10px); padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.3); position: sticky; top: 0; z-index: 100;}
+        .back-btn { text-decoration: none; color: #005BAC; font-weight: bold; }
+        
+        .container { max-width: 900px; margin: 20px auto; padding: 0 15px; }
+        
+        /* 文件夹容器 */
+        .folder-card { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(15px); border-radius: 15px; padding: 20px; margin-bottom: 20px; box-shadow: 0 8px 20px rgba(0,0,0,0.1); border: 1px solid rgba(255,255,255,0.4); }
+        .folder-title { font-size: 18px; color: #005BAC; margin-top: 0; display: flex; align-items: center; gap: 8px; border-bottom: 2px solid #eee; padding-bottom: 10px; }
+        
+        /* 文件列表 */
+        .file-list { margin-top: 15px; display: flex; flex-direction: column; gap: 10px; }
+        .file-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 15px; background: rgba(255,255,255,0.6); border-radius: 8px; transition: 0.3s; }
+        .file-item:hover { background: rgba(255,255,255,0.9); transform: translateX(5px); }
+        .file-name { display: flex; align-items: center; gap: 10px; font-weight: 500; }
+        .file-size { color: #888; font-size: 12px; }
+        
+        .download-btn { background: #4CAF50; color: white; border: none; padding: 6px 15px; border-radius: 6px; cursor: pointer; font-size: 13px; font-weight: bold; }
+        .download-btn:hover { background: #45a049; }
+    </style>
+</head>
+<body>
+
+    <nav class="nav-bar">
+        <a href="index.html" class="back-btn">← 返回首页</a>
+        <strong>历年期末复习资料</strong>
+        <div></div>
+    </nav>
+
+    <div class="container">
+        <div class="folder-card">
+            <h3 class="folder-title">📁 高等数学 (A)</h3>
+            <div class="file-list">
+                <div class="file-item">
+                    <div class="file-name">📄 2022-2023学年第一学期期末试卷.pdf <span class="file-size">2.1 MB</span></div>
+                    <button class="download-btn" onclick="downloadFile('高数期末卷.pdf')">下载</button>
+                </div>
+                <div class="file-item">
+                    <div class="file-name">📝 高数核心公式速记指南.docx <span class="file-size">800 KB</span></div>
+                    <button class="download-btn" onclick="downloadFile('高数公式.docx')">下载</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="folder-card">
+            <h3 class="folder-title">📁 计算机组成原理</h3>
+            <div class="file-list">
+                <div class="file-item">
+                    <div class="file-name">📊 计组期末复习PPT(浓缩版).pptx <span class="file-size">5.4 MB</span></div>
+                    <button class="download-btn" onclick="downloadFile('计组PPT.pptx')">下载</button>
+                </div>
+                <div class="file-item">
+                    <div class="file-name">📄 历年大题题型总结.pdf <span class="file-size">1.5 MB</span></div>
+                    <button class="download-btn" onclick="downloadFile('大题总结.pdf')">下载</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 权限检查
+        if (localStorage.getItem('isLoggedIn') !== 'true') {
+            alert('获取核心复习资料需验证本校学生身份！');
+            window.location.href = 'login.html';
+        }
+
+        // 模拟下载功能
+        function downloadFile(fileName) {
+            alert(`✅ 正在获取资源...\n【${fileName}】 即将开始下载！`);
+        }
+    </script>
+</body>
+</html>

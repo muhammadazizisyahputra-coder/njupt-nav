@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的预约 - 南邮直达</title>
+    <style>
+        body { margin: 0; font-family: 'PingFang SC', sans-serif; background: url('https://images.unsplash.com/photo-1541339907198-e08756dedf3f?q=80&w=1920&auto=format&fit=crop') fixed center/cover; color: #333; }
+        .nav-bar { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(10px); padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.3); position: sticky; top: 0; z-index: 100;}
+        .back-btn { text-decoration: none; color: #005BAC; font-weight: bold; }
+        
+        .container { max-width: 800px; margin: 20px auto; padding: 0 15px; }
+        
+        .res-card { background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(15px); border-radius: 12px; padding: 20px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border-left: 5px solid #2196F3; }
+        .res-info h3 { margin: 0 0 10px 0; color: #333; font-size: 18px; }
+        .res-info p { margin: 0; color: #666; font-size: 14px; margin-bottom: 5px;}
+        
+        .cancel-btn { background: #ff5252; color: white; border: none; padding: 8px 15px; border-radius: 6px; cursor: pointer; font-weight: bold; }
+        .cancel-btn:hover { background: #d50000; }
+        
+        .empty-state { text-align: center; padding: 50px; background: rgba(255,255,255,0.7); border-radius: 15px; margin-top: 20px; }
+    </style>
+</head>
+<body>
+
+    <nav class="nav-bar">
+        <a href="index.html" class="back-btn">← 返回首页</a>
+        <strong>我的座位预约</strong>
+        <div></div>
+    </nav>
+
+    <div class="container" id="resList">
+        </div>
+
+    <script>
+        if (localStorage.getItem('isLoggedIn') !== 'true') {
+            window.location.href = 'login.html';
+        }
+
+        const currentUser = localStorage.getItem('studentName') || "匿名学子";
+
+        function loadMyReservations() {
+            const listContainer = document.getElementById('resList');
+            let myResHtml = '';
+            let hasReservations = false;
+
+            // 遍历 localStorage 里所有的数据，寻找以 'room_res_' 开头的钥匙
+            for (let i = 0; i < localStorage.length; i++) {
+                const key = localStorage.key(i);
+                if (key.startsWith('room_res_')) {
+                    const roomName = key.replace('room_res_', ''); // 提取出教室名字
+                    const reservations = JSON.parse(localStorage.getItem(key)) || [];
+                    
+                    // 找出属于当前登录用户的预约
+                    reservations.forEach(res => {
+                        if (res.user === currentUser) {
+                            hasReservations = true;
+                            myResHtml += `
+                                <div class="res-card">
+                                    <div class="res-info">
+                                        <h3>📍 ${roomName}</h3>
+                                        <p>🕒 时段: <strong>${res.period}</strong></p>
+                                        <p>⏱️ 预约操作时间: ${res.time}</p>
+                                    </div>
+                                    <button class="cancel-btn" onclick="cancelReservation('${key}', '${res.period}')">取消预约</button>
+                                </div>
+                            `;
+                        }
+                    });
+                }
+            }
+
+            if (!hasReservations) {
+                myResHtml = `<div class="empty-state">
+                                <h2>🪹 暂无预约</h2>
+                                <p>您还没有预约任何教室，快去空闲教室逛逛吧！</p>
+                                <button onclick="window.location.href='classroom.html'" style="margin-top:15px; padding:10px 20px; background:#005BAC; color:white; border:none; border-radius:5px; cursor:pointer;">去预约</button>
+                             </div>`;
+            }
+
+            listContainer.innerHTML = myResHtml;
+        }
+
+        // 取消预约功能
+        function cancelReservation(storageKey, period) {
+            if (confirm(`确定要取消 ${period} 的预约吗？将释放该座位。`)) {
+                let reservations = JSON.parse(localStorage.getItem(storageKey)) || [];
+                // 过滤掉我们要取消的那个时段
+                reservations = reservations.filter(res => !(res.period === period && res.user === currentUser));
+                // 重新存回去
+                localStorage.setItem(storageKey, JSON.stringify(reservations));
+                
+                alert("取消成功！");
+                loadMyReservations(); // 重新加载列表
+            }
+        }
+
+        // 页面加载时执行
+        loadMyReservations();
+    </script>
+</body>
+</html>

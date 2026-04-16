@@ -84,14 +84,17 @@
                 let html = '';
                 for(let i=0; i<count; i++) {
                     const roomNum = Math.floor(Math.random() * 400) + 101;
-                    html += `<div class="room-card">
-                                <div class="room-name">${building}-${roomNum}</div>
-                                <span class="room-status">当前空闲</span>
-                             </div>`;
+                    html += `<div class="room-card" onclick="goToDetail('${building}-${roomNum}')" style="cursor:pointer">
+                                    <div class="room-name">${building}-${roomNum}</div>
+                                    <span class="room-status">当前空闲</span>
+                                 </div>`;
                 }
                 resultDiv.innerHTML = html;
             }, 800); // 假装加载了0.8秒
         }
+		function goToDetail(name) {
+		    window.location.href = `room_detail.html?name=${encodeURIComponent(name)}`;
+		}
     </script>
 </body>
 </html>

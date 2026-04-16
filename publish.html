@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>发布闲置 - 南邮直达</title>
+    <style>
+        body { margin: 0; font-family: 'PingFang SC', sans-serif; background: url('https://images.unsplash.com/photo-1541339907198-e08756dedf3f?q=80&w=1920&auto=format&fit=crop') fixed center/cover; color: #333; }
+        .nav-bar { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(10px); padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.3); position: sticky; top: 0; z-index: 100;}
+        .back-btn { text-decoration: none; color: #005BAC; font-weight: bold; }
+        
+        .container { max-width: 600px; margin: 30px auto; padding: 0 15px; }
+        .form-card { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(15px); border-radius: 15px; padding: 30px; box-shadow: 0 8px 32px rgba(0,0,0,0.1); border: 1px solid rgba(255,255,255,0.4); }
+        
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; font-weight: bold; margin-bottom: 8px; color: #555; }
+        .form-group input, .form-group select { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #ddd; outline: none; box-sizing: border-box; background: rgba(255,255,255,0.9); font-family: inherit; }
+        
+        .submit-btn { width: 100%; background: #005BAC; color: white; border: none; padding: 15px; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.3s; margin-top: 10px; }
+        .submit-btn:hover { background: #004a8d; transform: translateY(-2px); }
+    </style>
+</head>
+<body>
+
+    <nav class="nav-bar">
+        <a href="market.html" class="back-btn">← 取消发布</a>
+        <strong>发布二手教材</strong>
+        <div></div>
+    </nav>
+
+    <div class="container">
+        <div class="form-card">
+            <div class="form-group">
+                <label>📚 教材名称</label>
+                <input type="text" id="bookTitle" placeholder="例如：高等数学（第七版）下册" required>
+            </div>
+            
+            <div class="form-group">
+                <label>🎓 适用课程</label>
+                <input type="text" id="bookCourse" placeholder="例如：大一高数" required>
+            </div>
+            
+            <div class="form-group">
+                <label>💰 预期价格 (元)</label>
+                <input type="number" id="bookPrice" placeholder="例如：15" required>
+            </div>
+            
+            <div class="form-group">
+                <label>✨ 新旧程度</label>
+                <select id="bookCondition">
+                    <option value="全新包邮">全新包邮</option>
+                    <option value="九成新">九成新</option>
+                    <option value="有笔记">有笔记</option>
+                    <option value="战损版">战损版</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label>📞 联系方式</label>
+                <input type="text" id="bookContact" placeholder="例如：微信 wx123456" required>
+            </div>
+            
+            <button class="submit-btn" onclick="publishBook()">立即发布</button>
+        </div>
+    </div>
+
+    <script>
+        // 权限检查
+        if (localStorage.getItem('isLoggedIn') !== 'true') {
+            window.location.href = 'login.html';
+        }
+
+        function publishBook() {
+            // 1. 获取输入框的值
+            const title = document.getElementById('bookTitle').value;
+            const course = document.getElementById('bookCourse').value;
+            const price = document.getElementById('bookPrice').value;
+            const condition = document.getElementById('bookCondition').value;
+            const contact = document.getElementById('bookContact').value;
+
+            // 简单校验防止填空表单
+            if(!title || !price || !contact) {
+                alert("请填写完整的书名、价格和联系方式！");
+                return;
+            }
+
+            // 2. 将数据组装成一个“对象”
+            const newBook = {
+                title: title,
+                course: course,
+                price: price,
+                condition: condition,
+                contact: contact
+            };
+
+            // 3. 从本地存储读取历史记录，如果没有就创建一个空数组 []
+            let booksArray = JSON.parse(localStorage.getItem('marketBooks')) || [];
+            
+            // 4. 把新书塞进数组最前面
+            booksArray.unshift(newBook);
+            
+            // 5. 重新存回本地存储（必须转成字符串才能存）
+            localStorage.setItem('marketBooks', JSON.stringify(booksArray));
+
+            // 6. 提示并跳回市场页
+            alert("发布成功！");
+            window.location.href = 'market.html';
+        }
+    </script>
+</body>
+</html>

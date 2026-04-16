@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>教室详情 - 南邮直达</title>
+    <style>
+        body { margin: 0; font-family: 'PingFang SC', sans-serif; background: url('https://images.unsplash.com/photo-1541339907198-e08756dedf3f?q=80&w=1920&auto=format&fit=crop') fixed center/cover; color: #333; }
+        .nav-bar { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(10px); padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.3); position: sticky; top: 0; z-index: 100;}
+        .back-btn { text-decoration: none; color: #005BAC; font-weight: bold; }
+        
+        .container { max-width: 800px; margin: 20px auto; padding: 0 15px; }
+        .glass-panel { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(15px); border-radius: 15px; padding: 25px; box-shadow: 0 8px 32px rgba(0,0,0,0.1); border: 1px solid rgba(255,255,255,0.4); margin-bottom: 20px; }
+        
+        h2 { color: #005BAC; margin-top: 0; }
+        
+        /* 课表样式 */
+        .timetable { width: 100%; border-collapse: collapse; margin-top: 20px; background: white; border-radius: 10px; overflow: hidden; }
+        .timetable th, .timetable td { padding: 15px; text-align: center; border: 1px solid #eee; }
+        .timetable th { background: #f5f7fa; color: #666; font-size: 14px; }
+        
+        .status-busy { color: #999; background: #f9f9f9; font-size: 12px; }
+        .status-free { color: #4CAF50; font-weight: bold; cursor: pointer; }
+        .status-free:hover { background: #e8f5e9; }
+        .status-reserved { background: #e3f2fd; color: #1976d2; font-size: 12px; }
+
+        .btn-reserve { background: #005BAC; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 12px; }
+    </style>
+</head>
+<body>
+
+    <nav class="nav-bar">
+        <a href="classroom.html" class="back-btn">← 返回列表</a>
+        <strong id="headerTitle">教室详情</strong>
+        <div></div>
+    </nav>
+
+    <div class="container">
+        <div class="glass-panel">
+            <h2 id="roomNameDisplay">加载中...</h2>
+            <p style="color: #666; font-size: 14px;">📅 今日课表 (双周周四)</p>
+            
+            <table class="timetable">
+                <thead>
+                    <tr>
+                        <th>节次</th>
+                        <th>时间</th>
+                        <th>状态 / 课程</th>
+                    }
+                </thead>
+                <tbody id="timetableBody">
+                    </tbody>
+            </table>
+        </div>
+
+        <div class="glass-panel" id="reservationInfo" style="display:none;">
+            <h3>我的预约记录</h3>
+            <div id="myReservationList"></div>
+        </div>
+    </div>
+
+    <script>
+        // 获取 URL 中的教室名称
+        const urlParams = new URLSearchParams(window.location.search);
+        const roomName = urlParams.get('name') || "未知教室";
+        document.getElementById('roomNameDisplay').innerText = roomName;
+        document.getElementById('headerTitle').innerText = roomName + " 详情";
+
+        // 模拟课表数据 (实际开发中这些数据来自服务器)
+        const mockSchedule = [
+            { period: "1-2节", time: "08:00-09:35", course: "高等数学 (A)", isFree: false },
+            { period: "3-4节", time: "10:00-11:35", course: "空闲", isFree: true },
+            { period: "5-6节", time: "13:45-15:20", course: "大学英语", isFree: false },
+            { period: "7-8节", time: "15:40-17:15", course: "空闲", isFree: true },
+            { period: "9-10节", time: "18:30-20:05", course: "空闲", isFree: true }
+        ];
+
+        function renderTimetable() {
+            const tbody = document.getElementById('timetableBody');
+            const reservations = JSON.parse(localStorage.getItem('room_res_' + roomName)) || [];
+            
+            tbody.innerHTML = mockSchedule.map((item, index) => {
+                // 检查是否有本地预约
+                const res = reservations.find(r => r.period === item.period);
+                
+                let statusHtml = "";
+                if (!item.isFree) {
+                    statusHtml = `<td class="status-busy">${item.course}</td>`;
+                } else if (res) {
+                    statusHtml = `<td class="status-reserved">已预约: ${res.user}</td>`;
+                } else {
+                    statusHtml = `<td class="status-free" onclick="bookRoom('${item.period}')">
+                                    点击预约 <button class="btn-reserve">抢座</button>
+                                  </td>`;
+                }
+
+                return `<tr>
+                            <td>${item.period}</td>
+                            <td><small>${item.time}</small></td>
+                            ${statusHtml}
+                        </tr>`;
+            }).join('');
+        }
+
+        function bookRoom(period) {
+            const userName = localStorage.getItem('studentName') || "匿名学子";
+            const confirmRes = confirm(`确定预约 ${roomName} 的 ${period} 吗？`);
+            
+            if (confirmRes) {
+                let reservations = JSON.parse(localStorage.getItem('room_res_' + roomName)) || [];
+                reservations.push({
+                    period: period,
+                    user: userName,
+                    time: new Date().toLocaleString()
+                });
+                localStorage.setItem('room_res_' + roomName, JSON.stringify(reservations));
+                alert("预约成功！请准时到达教室。");
+                renderTimetable();
+            }
+        }
+
+        // 初始渲染
+        renderTimetable();
+    </script>
+</body>
+</html>
