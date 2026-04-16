@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>空闲教室 - 南邮直达</title>
+    <style>
+        body { margin: 0; font-family: 'PingFang SC', sans-serif; background: url('https://images.unsplash.com/photo-1541339907198-e08756dedf3f?q=80&w=1920&auto=format&fit=crop') fixed center/cover; color: #333; }
+        .nav-bar { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(10px); padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.3); position: sticky; top: 0; z-index: 100;}
+        .back-btn { text-decoration: none; color: #005BAC; font-weight: bold; }
+        
+        .container { max-width: 900px; margin: 20px auto; padding: 0 15px; }
+        .glass-panel { background: rgba(255, 255, 255, 0.75); backdrop-filter: blur(15px); border-radius: 15px; padding: 20px; box-shadow: 0 8px 32px rgba(0,0,0,0.1); border: 1px solid rgba(255,255,255,0.4); margin-bottom: 20px; }
+        
+        /* 筛选栏 */
+        .filter-group { display: flex; gap: 10px; flex-wrap: wrap; }
+        .filter-group select, .filter-group button { padding: 10px; border-radius: 8px; border: 1px solid #ddd; outline: none; background: rgba(255,255,255,0.9); }
+        .filter-group button { background: #005BAC; color: white; border: none; cursor: pointer; font-weight: bold; padding: 10px 20px;}
+        
+        /* 教室网格 */
+        .room-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px; margin-top: 20px; }
+        .room-card { background: rgba(255,255,255,0.9); padding: 20px; border-radius: 10px; text-align: center; border-left: 5px solid #4CAF50; box-shadow: 0 4px 10px rgba(0,0,0,0.05); transition: 0.3s; }
+        .room-card:hover { transform: translateY(-5px); box-shadow: 0 8px 15px rgba(0,0,0,0.1); }
+        .room-name { font-size: 20px; font-weight: bold; color: #005BAC; margin-bottom: 5px; }
+        .room-status { font-size: 12px; color: #4CAF50; background: #e8f5e9; padding: 3px 8px; border-radius: 10px;}
+    </style>
+</head>
+<body>
+
+    <nav class="nav-bar">
+        <a href="index.html" class="back-btn">← 返回首页</a>
+        <strong>空闲教室查询</strong>
+        <div></div>
+    </nav>
+
+    <div class="container">
+        <div class="glass-panel">
+            <div class="filter-group">
+                <select id="building">
+                    <option value="教1">教1楼</option>
+                    <option value="教2">教2楼</option>
+                    <option value="教3">教3楼</option>
+                    <option value="教4">教4楼</option>
+                </select>
+                <select id="time">
+                    <option value="1">1-2节</option>
+                    <option value="2">3-4节</option>
+                    <option value="3">5-6节</option>
+                    <option value="4">7-8节</option>
+                </select>
+                <button onclick="searchRooms()">一键查询</button>
+            </div>
+        </div>
+
+        <div class="glass-panel">
+            <h3 style="margin-top:0;">查询结果</h3>
+            <div class="room-grid" id="roomResults">
+                <div class="room-card"><div class="room-name">教1-101</div><span class="room-status">当前空闲</span></div>
+                <div class="room-card"><div class="room-name">教1-104</div><span class="room-status">当前空闲</span></div>
+                <div class="room-card"><div class="room-name">教1-205</div><span class="room-status">当前空闲</span></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 1. 登录拦截检查
+        (function() {
+            if (localStorage.getItem('isLoggedIn') !== 'true') {
+                alert('检测到未登录，请先验证身份！');
+                window.location.href = 'login.html';
+            }
+        })();
+
+        // 2. 模拟查询功能
+        function searchRooms() {
+            const building = document.getElementById('building').value;
+            const resultDiv = document.getElementById('roomResults');
+            
+            resultDiv.innerHTML = '<p>正在扫描传感器数据...</p>';
+            
+            setTimeout(() => {
+                // 模拟随机生成 3 到 6 个空闲教室
+                const count = Math.floor(Math.random() * 4) + 3; 
+                let html = '';
+                for(let i=0; i<count; i++) {
+                    const roomNum = Math.floor(Math.random() * 400) + 101;
+                    html += `<div class="room-card">
+                                <div class="room-name">${building}-${roomNum}</div>
+                                <span class="room-status">当前空闲</span>
+                             </div>`;
+                }
+                resultDiv.innerHTML = html;
+            }, 800); // 假装加载了0.8秒
+        }
+    </script>
+</body>
+</html>

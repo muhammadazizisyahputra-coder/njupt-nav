@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>二手教材交易 - 南邮直达</title>
+    <style>
+        body { margin: 0; font-family: 'PingFang SC', sans-serif; background: url('https://images.unsplash.com/photo-1541339907198-e08756dedf3f?q=80&w=1920&auto=format&fit=crop') fixed center/cover; color: #333; }
+        .nav-bar { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(10px); padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.3); position: sticky; top: 0; z-index: 100;}
+        .back-btn { text-decoration: none; color: #005BAC; font-weight: bold; }
+        
+        .container { max-width: 900px; margin: 20px auto; padding: 0 15px; }
+        
+        /* 瀑布流/网格书本列表 */
+        .book-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; }
+        .book-card { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(10px); border-radius: 15px; padding: 15px; box-shadow: 0 8px 20px rgba(0,0,0,0.1); border: 1px solid rgba(255,255,255,0.5); display: flex; flex-direction: column; }
+        
+        .book-img { width: 100%; height: 140px; background: #eee; border-radius: 10px; margin-bottom: 15px; display: flex; align-items: center; justify-content: center; color: #999; font-size: 40px; }
+        .book-title { font-size: 16px; font-weight: bold; margin: 0 0 5px 0; color: #333; }
+        .book-course { font-size: 12px; color: #666; margin-bottom: 10px; }
+        
+        .price-row { display: flex; justify-content: space-between; align-items: center; margin-top: auto; }
+        .price { color: #e53935; font-size: 18px; font-weight: bold; }
+        .condition { font-size: 12px; background: #ffe0b2; color: #f57c00; padding: 2px 6px; border-radius: 4px; }
+        
+        .contact-btn { background: #005BAC; color: white; border: none; padding: 8px; border-radius: 8px; margin-top: 15px; cursor: pointer; font-weight: bold; transition: 0.2s; }
+        .contact-btn:hover { background: #004a8d; }
+    </style>
+</head>
+<body>
+
+    <nav class="nav-bar">
+        <a href="index.html" class="back-btn">← 返回首页</a>
+        <strong>校园二手教材</strong>
+        <div><button style="border:none; background:transparent; color:#005BAC; font-weight:bold; cursor:pointer;" onclick="alert('发布功能开发中...')">+ 发布</button></div>
+    </nav>
+
+    <div class="container">
+        <div class="book-grid">
+            <div class="book-card">
+                <div class="book-img">📘</div>
+                <h3 class="book-title">高等数学 (第七版) 上册</h3>
+                <div class="book-course">适用课程: 高等数学A</div>
+                <div class="price-row">
+                    <span class="price">￥15.0</span>
+                    <span class="condition">九成新</span>
+                </div>
+                <button class="contact-btn" onclick="showContact('微信号: njupt_math123')">联系卖家</button>
+            </div>
+
+            <div class="book-card">
+                <div class="book-img">📙</div>
+                <h3 class="book-title">大学物理 (第三版)</h3>
+                <div class="book-course">适用课程: 大学物理</div>
+                <div class="price-row">
+                    <span class="price">￥10.0</span>
+                    <span class="condition">有笔记</span>
+                </div>
+                <button class="contact-btn" onclick="showContact('QQ: 123456789')">联系卖家</button>
+            </div>
+
+            <div class="book-card">
+                <div class="book-img">📗</div>
+                <h3 class="book-title">C语言程序设计</h3>
+                <div class="book-course">适用课程: 计算机基础</div>
+                <div class="price-row">
+                    <span class="price">￥20.0</span>
+                    <span class="condition">全新包邮</span>
+                </div>
+                <button class="contact-btn" onclick="showContact('手机号: 138xxxx0000')">联系卖家</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 1. 登录拦截检查
+        (function() {
+            if (localStorage.getItem('isLoggedIn') !== 'true') {
+                alert('二手交易区需要实名认证，请先登录！');
+                window.location.href = 'login.html';
+            }
+        })();
+
+        // 2. 查看联系方式
+        function showContact(info) {
+            alert("卖家联系方式：\n" + info + "\n\n请说明是在南邮直达上看到的~");
+        }
+    </script>
+</body>
+</html>
