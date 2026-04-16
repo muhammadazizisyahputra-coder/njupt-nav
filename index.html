@@ -135,9 +135,13 @@
        
        /* 工具箱卡片网格 */
        .toolbox {
-           display: grid;
-           grid-template-columns: repeat(3, 1fr);
-           gap: 20px;
+                      display: flex;              /* 开启弹性布局 */
+                      justify-content: center;    /* 让整体居中显示 */
+                      gap: 40px;                  /* 关键！设置卡片之间的均匀间距，数字越大隔得越开 */
+                      width: 100%;                /* 确保容器有足够的宽度去排布卡片 */
+                      max-width: 900px;           /* 限制一个最大宽度，防止在大屏幕上分得太散 */
+                      margin: 30px auto;          /* 保证整个盒子在页面水平居中，并与上下元素留出 30px 距离 */
+                  
        }
        
        /* 卡片升级为毛玻璃质感 */
