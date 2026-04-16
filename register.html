@@ -5,64 +5,47 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>学生注册 - 南邮直达</title>
     <style>
-        body { margin: 0; font-family: 'PingFang SC', sans-serif; height: 100vh; display: flex; align-items: center; justify-content: center; background: url('https://images.unsplash.com/photo-1541339907198-e08756dedf3f?q=80&w=1920&auto=format&fit=crop') fixed center/cover; }
-        .register-card { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(15px); padding: 40px; border-radius: 15px; box-shadow: 0 8px 32px rgba(0,0,0,0.1); width: 100%; max-width: 350px; text-align: center; }
-        h2 { color: #005BAC; margin-top: 0; margin-bottom: 30px; }
-        input { width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; }
-        button { width: 100%; padding: 12px; background: #005BAC; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 16px; font-weight: bold; margin-bottom: 15px;}
-        button:hover { background: #004a8d; }
-        a { color: #005BAC; text-decoration: none; font-size: 14px; }
+        body { margin: 0; font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; background-color: #f4f5f7; }
+        .card { background: white; padding: 40px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 300px; text-align: center; }
+        input { width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; }
+        button { width: 100%; padding: 10px; background: #005BAC; color: white; border: none; border-radius: 5px; cursor: pointer; }
+        a { display: block; margin-top: 15px; color: #005BAC; text-decoration: none; font-size: 14px; }
     </style>
 </head>
 <body>
-
-    <div class="register-card">
-        <h2>创建新账号</h2>
-        <input type="text" id="newStuId" placeholder="请输入学号 (作为账号)">
-        <input type="text" id="newName" placeholder="请输入你的昵称 (如: 南邮张三)">
-        <input type="password" id="newPwd" placeholder="请输入密码">
+    <div class="card">
+        <h2 style="color: #005BAC;">注册新账号</h2>
+        <input type="text" id="regStuId" placeholder="请输入学号">
+        <input type="text" id="regName" placeholder="请输入你的昵称">
+        <input type="password" id="regPwd" placeholder="请输入密码">
         <button onclick="handleRegister()">立即注册</button>
         <a href="login.html">已有账号？去登录</a>
     </div>
 
     <script>
-        async function handleRegister() {
-            const stuId = document.getElementById('newStuId').value;
-            const name = document.getElementById('newName').value;
-            const pwd = document.getElementById('newPwd').value;
-        
+        function handleRegister() {
+            const stuId = document.getElementById('regStuId').value;
+            const name = document.getElementById('regName').value;
+            const pwd = document.getElementById('regPwd').value;
+
             if(!stuId || !name || !pwd) {
-                alert("请填写完整信息！");
-                return;
+                alert("请填写完整信息！"); return;
             }
-        
-            try {
-                // 向你刚写的 Node.js 后端发送请求
-                const response = await fetch('http://localhost:3000/api/register', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        stuId: stuId,
-                        name: name,
-                        password: pwd
-                    })
-                });
-        
-                const result = await response.json();
-        
-                if (response.ok) {
-                    alert("✅ 注册成功！马上跳转去登录...");
-                    window.location.href = 'login.html';
-                } else {
-                    // 如果后端返回错误（比如学号重复）
-                    alert("❌ 注册失败：" + result.message);
-                }
-            } catch (error) {
-                alert("❌ 无法连接到服务器，请检查后端是否启动。");
+
+            // 1. 打开本地仓库（如果没有，就建一个空数组）
+            let db = JSON.parse(localStorage.getItem('myDatabase')) || [];
+
+            // 2. 检查学号是否重复
+            if(db.find(user => user.stuId === stuId)) {
+                alert("这个学号已经注册过啦！"); return;
             }
-        }
+
+            // 3. 把新用户塞进数组，并存回本地仓库
+            db.push({ stuId: stuId, name: name, password: pwd });
+            localStorage.setItem('myDatabase', JSON.stringify(db));
+
+            alert("✅ 注册成功！现在带你去登录...");
+            window.location.href = 'login.html';
         }
     </script>
 </body>
