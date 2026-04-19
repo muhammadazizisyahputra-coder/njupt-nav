@@ -496,6 +496,13 @@
 	        </div>
 	    </div>
 	<script>
+		(function checkLogin() {
+		    const isLoggedIn = localStorage.getItem('isLoggedIn');
+		    if (isLoggedIn !== 'true') {
+		        alert("检测到未登录，请先验证身份！");
+		        window.location.href = '../login.html'; // 强制跳转
+		    }
+		})();
 	        // 获取弹窗相关元素
 	        const modal = document.getElementById('reportModal');
 	        const reportFileName = document.getElementById('reportFileName');

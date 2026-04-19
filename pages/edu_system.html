@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>教务系统 - 南邮直达</title>
+    <style>
+        :root { --njupt-blue: #005BAC; --text-main: #333333; }
+        body {
+            margin: 0; padding: 20px; font-family: 'PingFang SC', sans-serif;
+            background-image: url('https://images.unsplash.com/photo-1541339907198-e08756dedf3f?q=80&w=1920&auto=format&fit=crop');
+            background-size: cover; background-position: center; background-attachment: fixed;
+        }
+        body::before {
+            content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            backdrop-filter: blur(15px) brightness(0.9); z-index: -1;
+        }
+        
+        .container { max-width: 600px; margin: 50px auto; background: rgba(255, 255, 255, 0.6); padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+        
+        h2 { text-align: center; color: var(--text-main); margin-bottom: 30px; font-size: 24px; }
+        .section-title { font-size: 16px; color: #555; margin-bottom: 15px; font-weight: bold; }
+
+        /* 2x2 网格布局还原截图设计 */
+        .shortcut-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr; /* 两列等宽 */
+            gap: 15px; /* 卡片间距 */
+            margin-bottom: 30px;
+        }
+
+        .grid-item {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px 10px;
+            border-radius: 12px;
+            text-align: center;
+            text-decoration: none;
+            color: var(--text-main);
+            font-weight: 500;
+            font-size: 16px;
+            border: 1px solid rgba(255,255,255,0.8);
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px; /* emoji和文字的距离 */
+        }
+
+        .grid-item:hover {
+            transform: scale(1.02);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            border-color: var(--njupt-blue);
+        }
+
+        .back-btn {
+            display: block; width: 100%; padding: 12px; background: rgba(255,255,255,0.8);
+            border: none; border-radius: 10px; font-size: 16px; cursor: pointer; transition: 0.3s;
+        }
+        .back-btn:hover { background: var(--njupt-blue); color: white; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>教务系统服务</h2>
+        
+        <div class="section-title">快捷入口</div>
+       <div class="shortcut-grid">
+		   <a href="grades_query.html" class="grid-item">📚 成绩查询</a>
+          
+           <a href="schedule.html" class="grid-item">📅 完整课表</a>
+           <a href="exams.html" class="grid-item">📝 考试安排</a>
+           <a href="evaluate.html" class="grid-item">✍️ 一键评教</a>
+       </div>
+
+        <button class="back-btn" onclick="window.location.href='../index.html'">返回首页</button>
+    </div>
+
+    <script>
+        if (localStorage.getItem('isLoggedIn') !== 'true') {
+            alert("请先登录！");
+            window.location.href = '../login.html';
+        }
+		// 在 <script> 标签里添加一个专门处理跳转的函数
+		function goToGrades(semester) {
+		    // 1. 存入交互数据：告诉下一个页面我想看哪个学期的成绩
+		    localStorage.setItem('targetSemester', semester);
+		    // 2. 执行跳转
+		    window.location.href = 'grades_query.html';
+		}
+    </script>
+</body>
+</html>

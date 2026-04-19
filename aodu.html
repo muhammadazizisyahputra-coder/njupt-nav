@@ -153,6 +153,13 @@
         <button class="checkout-btn">去结算</button>
     </div>
 	<script>
+		(function checkLogin() {
+		    const isLoggedIn = localStorage.getItem('isLoggedIn');
+		    if (isLoggedIn !== 'true') {
+		        alert("检测到未登录，请先验证身份！");
+		        window.location.href = '../login.html'; // 强制跳转
+		    }
+		})();
 	        // ==========================================
 	        // 核心：全局轻提示 (Toast) 引擎
 	        // ==========================================

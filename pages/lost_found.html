@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>失物招领 - 南邮直达</title>
+    <style>
+        body { font-family: sans-serif; background: #f4f6f9; padding: 20px; display: flex; justify-content: center; margin: 0; }
+        .container { background: white; width: 100%; max-width: 400px; padding: 20px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        h3 { margin-top: 0; color: #333; text-align: center; }
+        
+        .tabs { display: flex; margin-bottom: 15px; border-radius: 8px; overflow: hidden; border: 1px solid #005BAC; }
+        .tab-btn { flex: 1; padding: 10px; border: none; background: white; color: #005BAC; cursor: pointer; font-size: 14px; font-weight: bold; }
+        .tab-btn.active { background: #005BAC; color: white; }
+        
+        .item-list { list-style: none; padding: 0; margin: 0; }
+        .item-card { border-bottom: 1px solid #eee; padding: 12px 0; display: flex; justify-content: space-between; align-items: center; }
+        .item-card:last-child { border-bottom: none; }
+        .item-title { font-size: 15px; color: #333; margin-bottom: 4px; display: block; font-weight: bold; }
+        .item-desc { font-size: 12px; color: #888; }
+        
+        .publish-btn { width: 100%; padding: 12px; background: #FF4757; color: white; border: none; border-radius: 8px; font-size: 16px; cursor: pointer; margin-top: 15px; }
+        .back-btn { width: 100%; padding: 12px; margin-top: 10px; border: none; background: #eee; color: #666; border-radius: 8px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h3>💼 校园失物招领</h3>
+        
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchLF('lost', this)">寻物启事</button>
+            <button class="tab-btn" onclick="switchLF('found', this)">捡到物品</button>
+        </div>
+
+        <ul class="item-list" id="displayList">
+            <li class="item-card">
+                <div>
+                    <span class="item-title">丢失一把黑色雨伞</span>
+                    <span class="item-desc">昨天在教3-201遗失，求好心人联系</span>
+                </div>
+                <span style="font-size: 20px;">☔</span>
+            </li>
+            <li class="item-card">
+                <div>
+                    <span class="item-title">丢失一卡通 (张三)</span>
+                    <span class="item-desc">南二食堂买饭时弄丢了</span>
+                </div>
+                <span style="font-size: 20px;">💳</span>
+            </li>
+        </ul>
+
+        <button class="publish-btn" onclick="alert('打开表单：填写物品详情并发布')">+ 发布新信息</button>
+        <button class="back-btn" onclick="window.location.href='../smart.html'">返回上一页</button>
+    </div>
+
+    <script>
+        const data = {
+            'lost': [
+                { title: '丢失一把黑色雨伞', desc: '昨天在教3-201遗失，求好心人联系', icon: '☔' },
+                { title: '丢失一卡通 (张三)', desc: '南二食堂买饭时弄丢了', icon: '💳' }
+            ],
+            'found': [
+                { title: '捡到AirPods右耳', desc: '在风雨操场跑道旁捡到', icon: '🎧' },
+                { title: '捡到一本《高数》', desc: '图书馆四楼A区捡到', icon: '📘' }
+            ]
+        };
+
+        function switchLF(type, btn) {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            
+            const list = document.getElementById('displayList');
+            list.innerHTML = '';
+            
+            data[type].forEach(item => {
+                list.innerHTML += `
+                    <li class="item-card">
+                        <div>
+                            <span class="item-title">${item.title}</span>
+                            <span class="item-desc">${item.desc}</span>
+                        </div>
+                        <span style="font-size: 20px;">${item.icon}</span>
+                    </li>
+                `;
+            });
+        }
+    </script>
+</body>
+</html>

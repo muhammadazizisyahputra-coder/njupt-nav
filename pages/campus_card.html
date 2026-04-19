@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>一卡通服务 - 南邮直达</title>
+    <style>
+        body {
+            font-family: 'PingFang SC', sans-serif;
+            background-color: #f4f6f9;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+        .container {
+            width: 100%;
+            max-width: 400px;
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            text-align: center;
+        }
+        /* 模拟实体校园卡的设计 */
+        .card-visual {
+            background: linear-gradient(135deg, #005BAC, #00A4E4);
+            border-radius: 12px;
+            padding: 20px;
+            color: white;
+            text-align: left;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 20px rgba(0, 91, 172, 0.3);
+        }
+        .card-title {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        .balance-amount {
+            font-size: 36px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        .student-info {
+            font-size: 14px;
+            display: flex;
+            justify-content: space-between;
+            opacity: 0.8;
+        }
+        /* 充值按钮 */
+        .recharge-btn {
+            background-color: #FF4757;
+            color: white;
+            border: none;
+            padding: 12px 0;
+            width: 100%;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-bottom: 15px;
+        }
+        .recharge-btn:hover {
+            background-color: #ff2a3d;
+            transform: translateY(-2px);
+        }
+        .back-btn {
+            background: none;
+            border: 1px solid #ccc;
+            padding: 10px 0;
+            width: 100%;
+            border-radius: 25px;
+            color: #666;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>💳 校园一卡通</h2>
+        
+        <div class="card-visual">
+            <div class="card-title">当前余额 (元)</div>
+            <div class="balance-amount" id="balance">128.50</div>
+            <div class="student-info">
+                <span id="userName">同学</span>
+                <span>状态: 正常</span>
+            </div>
+        </div>
+
+        <button class="recharge-btn" onclick="recharge()">立即充值 (模拟)</button>
+        
+        <button class="back-btn" onclick="history.back()">返回上一页</button>
+    </div>
+
+    <script>
+        // 页面加载时读取一下本地存储的名字
+        window.onload = function() {
+            const name = localStorage.getItem('studentName');
+            if (name) {
+                document.getElementById('userName').innerText = name;
+            }
+        }
+
+        // 模拟充值功能
+        function recharge() {
+            let amount = prompt("请输入充值金额（元）：");
+            if (amount !== null && amount.trim() !== "") {
+                let currentBalance = parseFloat(document.getElementById('balance').innerText);
+                let newBalance = currentBalance + parseFloat(amount);
+                // 更新页面显示并保留两位小数
+                document.getElementById('balance').innerText = newBalance.toFixed(2);
+                alert("✅ 成功充值 " + amount + " 元！当前余额: " + newBalance.toFixed(2) + " 元");
+            }
+        }
+    </script>
+</body>
+</html>

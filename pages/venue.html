@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>场馆预约 - 南邮直达</title>
+    <style>
+        body { font-family: sans-serif; background: #f4f6f9; padding: 20px; display: flex; justify-content: center; margin: 0; }
+        .container { background: white; width: 100%; max-width: 400px; padding: 25px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        h3 { margin-top: 0; color: #333; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-size: 14px; color: #666; }
+        select, input[type="date"] { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; }
+        .submit-btn { width: 100%; padding: 12px; background: #27ae60; color: white; border: none; border-radius: 8px; font-size: 16px; cursor: pointer; margin-top: 10px; }
+        .back-btn { width: 100%; padding: 12px; margin-top: 10px; border: none; background: #eee; color: #666; border-radius: 8px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h3>🏟️ 体育场馆预约</h3>
+        
+        <div class="form-group">
+            <label>选择场馆</label>
+            <select id="venueType">
+                <option value="badminton">🏸 仙林体育馆 - 羽毛球场</option>
+                <option value="basketball">🏀 仙林体育馆 - 篮球场</option>
+                <option value="pingpong">🏓 仙林风雨操场 - 乒乓球</option>
+                <option value="tennis">🎾 三牌楼 - 网球场</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>预约日期</label>
+            <input type="date" id="reserveDate">
+        </div>
+
+        <div class="form-group">
+            <label>时间段</label>
+            <select id="timeSlot">
+                <option>14:00 - 16:00</option>
+                <option>16:00 - 18:00</option>
+                <option>18:00 - 20:00 (晚场)</option>
+            </select>
+        </div>
+
+        <button class="submit-btn" onclick="submitReservation()">立即预约</button>
+        <button class="back-btn" onclick="window.location.href='../smart.html'">返回上一页</button>
+    </div>
+
+    <script>
+        // 设置日期输入框默认值为今天
+        document.getElementById('reserveDate').valueAsDate = new Date();
+
+        function submitReservation() {
+            const date = document.getElementById('reserveDate').value;
+            if(!date) {
+                alert("请选择预约日期！"); return;
+            }
+            alert(`✅ 预约成功！\n您已成功预约 ${date} 的场地，请准时前往。`);
+            window.location.href = '../smart.html';
+        }
+    </script>
+</body>
+</html>

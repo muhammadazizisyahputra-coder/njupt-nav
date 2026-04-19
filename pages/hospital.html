@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>校医院 - 南邮直达</title>
+    <style>
+        body { font-family: sans-serif; background: #f4f6f9; padding: 20px; display: flex; justify-content: center; margin: 0; }
+        .container { background: white; width: 100%; max-width: 400px; padding: 25px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        h3 { margin-top: 0; color: #333; }
+        .info-card { background: #fff4f4; border: 1px solid #ffcccc; padding: 15px; border-radius: 10px; margin-bottom: 20px; }
+        .info-card h4 { margin: 0 0 10px 0; color: #d63031; }
+        .info-card p { margin: 5px 0; font-size: 14px; color: #555; }
+        .btn-call { display: block; text-align: center; background: #d63031; color: white; text-decoration: none; padding: 12px; border-radius: 8px; font-weight: bold; margin-bottom: 15px; }
+        .btn-book { width: 100%; padding: 12px; background: #005BAC; color: white; border: none; border-radius: 8px; font-size: 16px; cursor: pointer; }
+        .back-btn { width: 100%; padding: 12px; margin-top: 15px; border: none; background: #eee; color: #666; border-radius: 8px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h3>🏥 校医院服务</h3>
+        
+        <div class="info-card">
+            <h4>急诊与值班信息</h4>
+            <p>📍 仙林校区：校医院1楼急诊室</p>
+            <p>🕒 值班时间：24小时全天候</p>
+            <p>☎️ 仙林急救：025-85866120</p>
+        </div>
+
+        <a href="tel:02585866120" class="btn-call">🚨 紧急呼叫校医</a>
+        
+        <button class="btn-book" onclick="bookAppointment()">普通门诊预约挂号</button>
+        <button class="back-btn" onclick="window.location.href='../smart.html'">返回上一页</button>
+    </div>
+
+    <script>
+        function bookAppointment() {
+            alert("即将跳转至校医院在线挂号系统...");
+            // 实际开发中这里会跳转到真实的挂号页面
+        }
+    </script>
+</body>
+</html>

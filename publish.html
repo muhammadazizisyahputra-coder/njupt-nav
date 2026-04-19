@@ -65,6 +65,13 @@
     </div>
 
     <script>
+		(function checkLogin() {
+		    const isLoggedIn = localStorage.getItem('isLoggedIn');
+		    if (isLoggedIn !== 'true') {
+		        alert("检测到未登录，请先验证身份！");
+		        window.location.href = '../login.html'; // 强制跳转
+		    }
+		})();
         // 权限检查
         if (localStorage.getItem('isLoggedIn') !== 'true') {
             window.location.href = 'login.html';

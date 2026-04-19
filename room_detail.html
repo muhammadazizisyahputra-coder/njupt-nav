@@ -60,6 +60,13 @@
     </div>
 
     <script>
+		(function checkLogin() {
+		    const isLoggedIn = localStorage.getItem('isLoggedIn');
+		    if (isLoggedIn !== 'true') {
+		        alert("检测到未登录，请先验证身份！");
+		        window.location.href = '../login.html'; // 强制跳转
+		    }
+		})();
         // 获取 URL 中的教室名称
         const urlParams = new URLSearchParams(window.location.search);
         const roomName = urlParams.get('name') || "未知教室";

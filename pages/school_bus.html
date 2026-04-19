@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>校车时刻表 - 南邮直达</title>
+    <style>
+        body { font-family: sans-serif; background: #f4f6f9; padding: 20px; display: flex; justify-content: center; }
+        .container { background: white; width: 100%; max-width: 400px; padding: 20px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        h3 { color: #005BAC; text-align: center; margin-top: 0; }
+        
+        /* 切换按钮组 */
+        .tab-group { display: flex; background: #f0f0f0; border-radius: 8px; margin-bottom: 20px; overflow: hidden; }
+        .tab-btn { flex: 1; padding: 10px; border: none; background: none; cursor: pointer; font-size: 14px; transition: 0.3s; }
+        .tab-btn.active { background: #005BAC; color: white; font-weight: bold; }
+        
+        /* 时刻表列表 */
+        .time-list { list-style: none; padding: 0; margin: 0; }
+        .time-item { display: flex; justify-content: space-between; padding: 15px 0; border-bottom: 1px solid #eee; }
+        .time-item:last-child { border-bottom: none; }
+        .time { font-size: 18px; font-weight: bold; color: #333; }
+        .status { color: #27ae60; font-size: 14px; background: #e8f8f5; padding: 2px 8px; border-radius: 4px; }
+        
+        .back-btn { width: 100%; padding: 12px; margin-top: 20px; border: none; background: #eee; border-radius: 8px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h3>🚌 班车时刻查询</h3>
+        
+        <div class="tab-group">
+            <button class="tab-btn active" onclick="switchTab('xianlin', this)">仙林 ➔ 三牌楼</button>
+            <button class="tab-btn" onclick="switchTab('sanpailou', this)">三牌楼 ➔ 仙林</button>
+        </div>
+
+        <ul class="time-list" id="busList">
+            </ul>
+
+        <button class="back-btn" onclick="history.back()">返回</button>
+    </div>
+
+    <script>
+        // 模拟南邮校车数据
+        const busData = {
+            'xianlin': [
+                { time: '07:30', note: '正常发车' },
+                { time: '12:10', note: '正常发车' },
+                { time: '16:30', note: '正常发车' }
+            ],
+            'sanpailou': [
+                { time: '07:00', note: '正常发车' },
+                { time: '12:50', note: '正常发车' },
+                { time: '17:10', note: '正常发车' }
+            ]
+        };
+
+        // 切换标签的逻辑
+        function switchTab(route, btnElement) {
+            // 1. 改变按钮的颜色
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            btnElement.classList.add('active');
+
+            // 2. 渲染对应的时刻表
+            const listElement = document.getElementById('busList');
+            listElement.innerHTML = ''; // 清空旧列表
+            
+            busData[route].forEach(bus => {
+                listElement.innerHTML += `
+                    <li class="time-item">
+                        <span class="time">${bus.time}</span>
+                        <span class="status">${bus.note}</span>
+                    </li>
+                `;
+            });
+        }
+
+        // 页面加载时默认显示仙林始发
+        window.onload = function() {
+            switchTab('xianlin', document.querySelector('.tab-btn.active'));
+        }
+    </script>
+</body>
+</html>

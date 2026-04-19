@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>成绩查询 - 南邮直达</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; background: #fff; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+        th { background-color: #005BAC; color: white; }
+        .user-info { color: #666; margin-bottom: 20px; }
+        .back-btn { margin-top: 20px; padding: 10px; background: #eee; border: none; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <div style="max-width: 800px; margin: 0 auto;">
+        <h2>我的成绩单</h2>
+        <div class="user-info">
+            学生姓名：<strong id="studentNameDisplay">加载中...</strong> | 
+            学期：2025-2026 第一学期
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>课程代码</th>
+                    <th>课程名称</th>
+                    <th>学分</th>
+                    <th>成绩</th>
+                    <th>绩点</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>B1001</td><td>高等数学A</td><td>5.0</td><td>88</td><td>3.8</td></tr>
+                <tr><td>B1002</td><td>大学物理</td><td>4.0</td><td>92</td><td>4.0</td></tr>
+                <tr><td>B1003</td><td>Java程序设计</td><td>3.0</td><td>85</td><td>3.5</td></tr>
+            </tbody>
+        </table>
+
+        <button class="back-btn" onclick="window.location.href='edu_system.html'">⬅ 返回教务系统</button>
+        
+        
+    </div>
+
+    <script>
+        window.onload = function() {
+            // 1. 权限拦截（之前写过的）
+            if (localStorage.getItem('isLoggedIn') !== 'true') {
+                window.location.href = '../login.html';
+                return;
+            }
+    
+            // 2. 交互核心：读取二级页面传来的“学期”信息
+            const semester = localStorage.getItem('targetSemester') || '未知学期';
+            const studentName = localStorage.getItem('studentName') || '同学';
+    
+            // 3. 将数据显示在页面上
+            document.getElementById('semesterTitle').innerText = semester;
+            document.getElementById('welcomeName').innerText = studentName;
+    
+            // 4. (进阶) 根据学期模拟不同的数据
+            const gradeTable = document.getElementById('gradeBody');
+            if (semester.includes('2023-2024')) {
+                gradeTable.innerHTML = `
+                    <tr><td>B101</td><td>线性代数</td><td>88</td></tr>
+                    <tr><td>B102</td><td>大学物理</td><td>92</td></tr>
+                `;
+            }
+        }
+    </script>
+</body>
+</html>

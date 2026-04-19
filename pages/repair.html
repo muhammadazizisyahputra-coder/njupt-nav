@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>后勤报修 - 南邮直达</title>
+    <style>
+        body { font-family: sans-serif; background: #f4f6f9; padding: 20px; display: flex; justify-content: center; }
+        .container { background: white; width: 100%; max-width: 400px; padding: 25px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        h3 { margin-top: 0; color: #333; display: flex; align-items: center; gap: 8px; }
+        
+        /* 表单样式 */
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-size: 14px; color: #666; }
+        input[type="text"], select, textarea {
+            width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; font-family: inherit;
+        }
+        textarea { resize: vertical; height: 80px; }
+        
+        .submit-btn {
+            width: 100%; padding: 12px; background: #005BAC; color: white; border: none; border-radius: 8px; font-size: 16px; cursor: pointer; margin-top: 10px;
+        }
+        .back-btn { width: 100%; padding: 12px; margin-top: 10px; border: none; background: transparent; color: #666; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h3>🔧 在线报修登记</h3>
+        
+        <div class="form-group">
+            <label>报修区域 (例: 荷苑4栋312)</label>
+            <input type="text" id="location" placeholder="请输入宿舍号或教室号">
+        </div>
+
+        <div class="form-group">
+            <label>维修类别</label>
+            <select id="type">
+                <option value="水路管件">💧 水路管件 (水龙头漏水等)</option>
+                <option value="电路电器">⚡ 电路电器 (跳闸、灯管坏)</option>
+                <option value="家具门窗">🪑 家具门窗 (床板断裂等)</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>故障描述</label>
+            <textarea id="desc" placeholder="请简单描述损坏情况..."></textarea>
+        </div>
+
+        <button class="submit-btn" onclick="submitRepair()">提交报修单</button>
+        <button class="back-btn" onclick="history.back()">取消返回</button>
+    </div>
+
+    <script>
+        function submitRepair() {
+            const loc = document.getElementById('location').value;
+            const desc = document.getElementById('desc').value;
+
+            if(!loc || !desc) {
+                alert("⚠️ 请填写完整报修位置和损坏描述！");
+                return;
+            }
+
+            // 模拟提交成功
+            alert("✅ 提交成功！维修师傅将在24小时内联系您。");
+            // 提交成功后自动返回智慧校园页
+            window.location.href = 'smart.html';
+        }
+    </script>
+</body>
+</html>

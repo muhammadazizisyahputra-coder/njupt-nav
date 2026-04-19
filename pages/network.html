@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>校园网 - 南邮直达</title>
+    <style>
+        body { font-family: sans-serif; background: #f4f6f9; padding: 20px; display: flex; justify-content: center; margin: 0; }
+        .container { background: white; width: 100%; max-width: 400px; padding: 25px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); text-align: center; }
+        .status-circle { width: 80px; height: 80px; background: #e8f8f5; border: 4px solid #27ae60; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; }
+        .status-circle span { font-size: 30px; }
+        h3 { margin-top: 0; color: #333; }
+        .net-info { text-align: left; background: #f8f9fa; padding: 15px; border-radius: 10px; margin-bottom: 20px; font-size: 14px; color: #555; }
+        .net-info p { margin: 8px 0; display: flex; justify-content: space-between; }
+        .action-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px; }
+        .action-btn { padding: 12px; border: none; border-radius: 8px; cursor: pointer; font-size: 14px; font-weight: bold; }
+        .btn-recharge { background: #005BAC; color: white; }
+        .btn-repair { background: #f39c12; color: white; }
+        .back-btn { width: 100%; padding: 12px; border: none; background: #eee; color: #666; border-radius: 8px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="status-circle"><span>📶</span></div>
+        <h3>校园网状态：已连接</h3>
+        
+        <div class="net-info">
+            <p><span>IP 地址：</span> <strong>10.168.1.102</strong></p>
+            <p><span>MAC 地址：</span> <strong>AA:BB:CC:DD:EE:FF</strong></p>
+            <p><span>本月已用流量：</span> <strong>12.4 GB</strong></p>
+        </div>
+
+        <div class="action-grid">
+            <button class="action-btn btn-recharge" onclick="alert('跳转至网费充值页面')">网费充值</button>
+            <button class="action-btn btn-repair" onclick="alert('跳转至信息化建设处报修工单')">故障报修</button>
+        </div>
+
+        <button class="back-btn" onclick="window.location.href='../smart.html'">返回上一页</button>
+    </div>
+</body>
+</html>

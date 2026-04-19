@@ -236,8 +236,8 @@
 	</script>
 
     <header class="header">
-        <a href="#" class="logo">● 南邮直达</a>
-        <a href="#" class="login-btn">学生登录</a>
+        <a href="index.html" class="logo">● 南邮直达</a>
+        <a href="login.html" class="login-btn" id="topLoginBtn">学生登录</a>
     </header>
 
     <main class="main-container">
@@ -246,7 +246,7 @@
         </div>
 
        <nav class="quick-nav">
-           <a href="javascript:void(0)" onclick="checkAccess('academic.html')">教务系统</a>
+           <a href="javascript:void(0)" onclick="checkAccess('pages/edu_system.html')">教务系统</a>
            <a href="javascript:void(0)" onclick="checkAccess('smart.html')">智慧校园</a>
            <a href="javascript:void(0)" onclick="checkAccess('library.html')">图书馆预约</a>
            <a href="javascript:void(0)" onclick="checkAccess('aodu.html')">奥都外卖</a>
@@ -284,6 +284,46 @@
            </a>
        </div>
     </main>
+<script>
+       window.onload = function() {
+           const isLoggedIn = localStorage.getItem('isLoggedIn');
+           const logoutBtn = document.getElementById('logoutBtn');
+           const topLoginBtn = document.querySelector('.login-btn'); // 使用 class 查找更稳妥
+       
+           if (isLoggedIn === 'true') {
+               if (logoutBtn) logoutBtn.style.display = 'block';
+               
+               // 交互升级：登录后把“学生登录”变成“我的主页”或名字
+               if (topLoginBtn) {
+                   const name = localStorage.getItem('studentName') || '同学';
+                   topLoginBtn.innerText = '欢迎，' + name;
+                   topLoginBtn.href = 'javascript:void(0)';
+               }
+           }
+       }
 
+        // 2. 权限检查逻辑
+        function checkAccess(targetUrl) {
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+            if (isLoggedIn === 'true') {
+                window.location.href = targetUrl;
+            } else {
+                alert('该功能需要登录后使用，请先登录！');
+                window.location.href = 'login.html';
+            }
+        }
+
+        // 3. 退出登录逻辑
+        function logout() {
+            if(confirm('确定要退出登录吗？')) {
+                localStorage.removeItem('isLoggedIn');
+                localStorage.removeItem('studentName');
+                alert('已安全退出');
+                location.reload();
+            }
+        }
+    </script>
+</body>
+</html>
 </body>
 </html>
